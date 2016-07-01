@@ -34,6 +34,9 @@ app.post('/submit', function (req, res) {
   var food = req.body.food;
   var drink = req.body.drink;
   var others = req.body.others;
+  
+  console.log("post request really coming through?", req.body);
+
   var promise = new rsvp.Promise(function (fulfill) {
     sqlq.checkPersonExist(number,
       function (getName) {

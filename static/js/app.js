@@ -43,7 +43,7 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
                 templateUrl: 'myModalContent.html',
-                controller: function ($scope, $uibModalInstance, items, $http, $location) {
+                controller: function ($scope, $uibModalInstance, items, $http, $location, $window) {
                     $scope.items = items.drink.concat(items.food);
                     $scope.contacts = {
                         name: items.name,
@@ -59,12 +59,13 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
                     items.total = $scope.total;
 
                     $scope.ok = function (params) {
-                        console.log(items);
+                        console.log(JSON.stringify(items));
                         var url = $location.absUrl() + 'submit';
  
                         $http.post(url, JSON.stringify(items)).then(
                             function success(response) {
                                 console.log("Success", response);
+                                $window.location.href = $location.absUrl();
                             }, function error(response) {
                                 console.log("Something went horribly wrong. Check url endpoint first");
                                 alert("SHIT!");
@@ -122,7 +123,7 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
 
         list.getDrink = function () {
             return drinks;
-        }
+        };
 
         return list;
     });
