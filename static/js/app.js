@@ -1,6 +1,6 @@
 angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
-    .controller('formCtrl', function ($scope, $http, $uibModal) {
-        var self = this;
+    .controller('formCtrl', function ($scope, $http, $uibModal, InventoryService) {
+        var inv = InventoryService;
 
         $scope.user = {
             name: '',
@@ -13,40 +13,31 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
         $scope.submit = function () {
             // $http.post('somewebsite', body = JSON.stringify(body));
 
-            console.log(JSON.stringify($scope.user))
+            console.log(JSON.stringify($scope.user));
         };
 
-        $scope.foods = [
-            { category: 'Halal', name: 'Food 1', price: 10 },
-            { category: 'Halal', name: 'Food 2', price: 12 },
-            { category: 'Vegetarian', name: 'Food 3', price: 10 }
-        ];
-        $scope.foods.forEach(function (element) {
-            element.selected = false;
-            element.qty = 1;
-        }, this);
+        $scope.foods = inv.getFood();
+        $scope.drinks = inv.getDrink();
 
-        $scope.toggleFood = function (food) {
+        $scope.toggleMeal = function (food) {
             food.selected = !food.selected;
             food.qty = 1;
-        }
-
-        $scope.drinks = [
-            { name: "Kopi", price: 4 },
-            { name: "Teh", price: 4 }
-        ];
-
-        $scope.drinks.forEach(function (element) {
-            element.selected = false;
-            element.qty = 1;
-        });
+        };
 
         $scope.toggleDrink = function (drink) {
             drink.selected = !drink.selected;
             drink.qty = 1;
         };
 
-        $scope.open = function () {
+        $scope.open = function (form) {
+
+            // Comment this part out if you're testing and don't want validation
+            if (!form.$valid) {
+                console.log(form);
+                var message = "There are invalid fields. ";
+                alert(message);
+                return;
+            }
 
             $scope.foods.forEach(function (element) {
                 if (element.selected) $scope.user.food.push(element);
@@ -60,23 +51,35 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
                 animation: $scope.animationsEnabled,
                 templateUrl: 'myModalContent.html',
                 controller: function ($scope, $uibModalInstance, items, $http) {
-                    $scope.items = items;
+                    $scope.items = items.drink.concat(items.food);
+                    $scope.contacts = {
+                        name: items.name,
+                        email: items.email,
+                        phone: items.phone
+                    };
+
+                    $scope.total = 0;
+                    $scope.items.forEach(function(element) {
+                        $scope.total += element.price * element.qty;
+                    }, this);
+
+                    items.total = $scope.total;
 
                     $scope.ok = function (params) {
                         console.log(items);
-                        var url = "url that will handle post json request.com"
-                        $http.post(url, JSON.stringify(items)).then(
-                            function success(response) {
-                                console.log("Success", response);
-                            }, function error(response) {
-                                console.log("Something went horribly wrong. Check url endpoint first");
-                                alert("SHIT!");
-                            }
-                        )
-                    }
+                        // var url = "url that will handle post json request.com";
+                        // $http.post(url, JSON.stringify(items)).then(
+                        //     function success(response) {
+                        //         console.log("Success", response);
+                        //     }, function error(response) {
+                        //         console.log("Something went horribly wrong. Check url endpoint first");
+                        //         alert("SHIT!");
+                        //     }
+                        // );
+                    };
                     $scope.cancel = function () {
                         $uibModalInstance.dismiss('cancel');
-                    }
+                    };
                 },
                 resolve: {
                     items: function () {
@@ -94,4 +97,38 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
             });
         };
 
+    })
+    .factory('InventoryService', function () {
+        var list = {};
+
+        var foods = [
+            { category: 'Halal', name: 'Food 1', price: 10 },
+            { category: 'Halal', name: 'Food 2', price: 12 },
+            { category: 'Vegetarian', name: 'Food 3', price: 10 }
+        ];
+
+        foods.forEach(function (element) {
+            element.selected = false;
+            element.qty = 1;
+        }, this);
+
+        var drinks = [
+            { name: "Kopi", price: 4 },
+            { name: "Teh", price: 4 }
+        ];
+
+        drinks.forEach(function (element) {
+            element.selected = false;
+            element.qty = 1;
+        });
+
+        list.getFood = function () {
+            return foods;
+        };
+
+        list.getDrink = function () {
+            return drinks;
+        }
+
+        return list;
     });
