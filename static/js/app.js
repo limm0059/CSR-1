@@ -9,12 +9,6 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
             drink: []
         };
 
-        $scope.submit = function () {
-            // $http.post('somewebsite', body = JSON.stringify(body));
-
-            console.log(JSON.stringify($scope.user));
-        };
-
         $scope.foods = inv.getFood();
         $scope.drinks = inv.getDrink();
 
