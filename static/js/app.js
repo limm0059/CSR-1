@@ -1,7 +1,6 @@
 angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
-    .controller('formCtrl', function ($scope, $http, $uibModal, InventoryService) {
+    .controller('formCtrl', function ($scope, $http, $uibModal, InventoryService, $location) {
         var inv = InventoryService;
-
         $scope.user = {
             name: '',
             email: '',
@@ -50,7 +49,7 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
                 templateUrl: 'myModalContent.html',
-                controller: function ($scope, $uibModalInstance, items, $http) {
+                controller: function ($scope, $uibModalInstance, items, $http, $location) {
                     $scope.items = items.drink.concat(items.food);
                     $scope.contacts = {
                         name: items.name,
@@ -67,15 +66,16 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
 
                     $scope.ok = function (params) {
                         console.log(items);
-                        // var url = "url that will handle post json request.com";
-                        // $http.post(url, JSON.stringify(items)).then(
-                        //     function success(response) {
-                        //         console.log("Success", response);
-                        //     }, function error(response) {
-                        //         console.log("Something went horribly wrong. Check url endpoint first");
-                        //         alert("SHIT!");
-                        //     }
-                        // );
+                        var url = $location.absUrl() + 'submit';
+ 
+                        $http.post(url, JSON.stringify(items)).then(
+                            function success(response) {
+                                console.log("Success", response);
+                            }, function error(response) {
+                                console.log("Something went horribly wrong. Check url endpoint first");
+                                alert("SHIT!");
+                            }
+                        );
                     };
                     $scope.cancel = function () {
                         $uibModalInstance.dismiss('cancel');
