@@ -1,0 +1,19 @@
+C:\Users\Daniel\PycharmProjects\GAE_VENV\Scripts\python
+
+localhost:
+"C:\Program Files (x86)\Google\google_appengine\dev_appserver.py" .
+C:\Users\Daniel\PycharmProjects\GAE_VENV\Scripts\python "C:\Program Files (x86)\Google\google_appengine\dev_appserver.py" .
+
+server:
+"C:\Program Files (x86)\Google\google_appengine\appcfg.py" --oauth2 -A [PROJECT_ID] update [app-folder-path] --no_cookies
+"C:\Program Files (x86)\Google\google_appengine\appcfg.py" --oauth2 -A  food-for-me update . --no_cookies
+
+rollback:
+"C:\Program Files (x86)\Google\google_appengine\appcfg.py" rollback . --no_cookies
+
+full:
+C:\Users\Daniel\PycharmProjects\GAE_VENV\Scripts\python "C:\Program Files (x86)\Google\google_appengine\appcfg.py" --oauth2 -A  food-for-me update . --no_cookies
+
+Remarks:
+You'll need to install Google App Engine SDK (Python)
+Open a terminal, cd to the folder holding the root directory and run the localhost snippet above

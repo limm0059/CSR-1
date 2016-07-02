@@ -4,23 +4,17 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
         $scope.user = {
             name: '',
             email: '',
-            number: '',
-            food: [],
-            drink: []
+            phone: '',
+            orders: []
         };
 
         console.log($location.absUrl());
         $scope.foods = inv.getFood();
         $scope.drinks = inv.getDrink();
 
-        $scope.toggleMeal = function (food) {
-            food.selected = !food.selected;
-            food.qty = 1;
-        };
-
-        $scope.toggleDrink = function (drink) {
-            drink.selected = !drink.selected;
-            drink.qty = 1;
+        $scope.toggleOrder = function (item) {
+            item.selected = !item.selected;
+            item.qty = 1;
         };
 
         $scope.open = function (form) {
@@ -34,18 +28,18 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
             }
 
             $scope.foods.forEach(function (element) {
-                if (element.selected) $scope.user.food.push(element);
+                if (element.selected) $scope.user.orders.push(element);
             });
 
             $scope.drinks.forEach(function (element) {
-                if (element.selected) $scope.user.drink.push(element);
+                if (element.selected) $scope.user.orders.push(element);
             });
 
             var modalInstance = $uibModal.open({
-                animation: $scope.animationsEnabled,
+                animation: true,
                 templateUrl: 'myModalContent.html',
                 controller: function ($scope, $uibModalInstance, items, $http, $location, $window) {
-                    $scope.items = items.drink.concat(items.food);
+                    $scope.items = items.orders;
                     $scope.contacts = {
                         name: items.name,
                         email: items.email,
@@ -53,7 +47,7 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
                     };
 
                     $scope.total = 0;
-                    $scope.items.forEach(function(element) {
+                    $scope.items.forEach(function (element) {
                         $scope.total += element.price * element.qty;
                     }, this);
 
@@ -61,8 +55,8 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
 
                     $scope.ok = function (params) {
                         console.log(JSON.stringify(items));
-                        var url = $location.absUrl() + 'submit';
- 
+                        var url = $location.absUrl();
+
                         $http.post(url, JSON.stringify(items)).then(
                             function success(response) {
                                 console.log("Success", response);
@@ -87,11 +81,92 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
             modalInstance.result.then(function (selectedItem) {
                 $scope.selected = selectedItem;
             }, function () {
-                $scope.user.food = [];
-                $scope.user.drink = [];
+                $scope.user.orders = [];
                 console.log('Modal dismissed at: ' + new Date());
             });
         };
+
+    })
+    .controller('indexCtrl', function ($location, $window, $scope, $http, $timeout, $uibModal) {
+        $scope.toForm = function () {
+            $window.location.href = $location.absUrl() + 'form';
+        };
+        $scope.phoneBox = {
+            show: false,
+            toggle: function () {
+                this.show = !this.show;
+            }
+        };
+
+        $scope.hideBall = true;
+
+        var promise = null;
+        $scope.$watch('phoneBox.phone', function (new_val, old_val) {
+            
+            if (promise) {
+        	    $scope.hideBall = true;
+            }
+            $timeout.cancel(promise);
+            if (!new_val) {
+                return;
+            }
+            $scope.hideBall = false;            
+            var url = $location.absUrl();
+            var package = JSON.stringify({ phone: new_val });
+
+            function getOrder() {
+                $http.post(url, package).then(function success(response) {
+                    $scope.items = response.data;
+                    $scope.hideBall = true;
+                    function open() {
+                        var modalInstance = $uibModal.open({
+                            animation: true,
+                            templateUrl: 'myModalContent.html',
+                            controller: function ($scope, $uibModalInstance, items, $http, $location, $window) {
+                                $scope.items = items.orders;
+                                $scope.contacts = {
+                                    name: items.name,
+                                    email: items.email,
+                                    phone: items.phone
+                                };
+
+                                $scope.total = 0;
+                                $scope.items.forEach(function (element) {
+                                    $scope.total += element.price * element.qty;
+                                }, this);
+
+                                items.total = $scope.total;
+
+                                $scope.update = function () {
+                                    $window.location.href = $location.absUrl() + 'form';
+                                };
+                                $scope.ok = function () {
+                                    $uibModalInstance.dismiss('cancel');
+                                };
+                            },
+                            resolve: {
+                                items: function () {
+                                    return $scope.items;
+                                }
+                            }
+                        });
+
+                        modalInstance.result.then(function (selectedItem) {
+                            $scope.selected = selectedItem;
+                        }, function () {
+                            console.log('Modal dismissed at: ' + new Date());
+                        });
+                    }
+                    open();
+                    
+                }, function error(response) {
+                    console.log('Error Data does not Exist');
+                    $scope.hideBall = true;
+                });
+            }
+
+            promise = $timeout(getOrder, 1500);
+        });
 
     })
     .factory('InventoryService', function () {
