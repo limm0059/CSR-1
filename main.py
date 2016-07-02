@@ -38,7 +38,7 @@ class Form(Handler):
         email = data['email']
         orders = data['orders']
         Orders.set_order(name, phone, email, orders)
-        self.response.write(data)
+        self.response.write(json.dumps({"done": True}))
 
 
 class Index(Handler):

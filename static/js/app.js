@@ -60,6 +60,7 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable']
                         $http.post(url, JSON.stringify(items)).then(
                             function success(response) {
                                 console.log("Success", response);
+                                alert("And you've helped save the world.. Thank you!");
                                 $window.location.href = $location.absUrl();
                             }, function error(response) {
                                 console.log("Something went horribly wrong. Check url endpoint first");
