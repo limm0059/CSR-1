@@ -173,14 +173,19 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable']
     })
     .controller('SummaryCtrl', function ($http, $scope, NgTableParams, $location) {
 
-        $scope.tableParams = new NgTableParams();
+        $scope.tableParams1 = new NgTableParams();
+        $scope.tableParams2 = new NgTableParams();
+
         $scope.aggregate = {
             total: 0,
             order: 0,
             unique: 0
         };
+
         $http.post($location.absUrl()).then(function success(response) {
-            var data = response.data;
+            var data = response.data.ret;
+            var agg = response.data.agg;
+            console.log(agg);
 
             $scope.aggregate.order = data.length;
 
@@ -193,8 +198,12 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable']
                 $scope.aggregate.unique += element.orders.length;
                 $scope.aggregate.total += total;
             });
-            $scope.tableParams.settings({
+            $scope.tableParams1.settings({
                 dataset: data
+            });
+
+            $scope.tableParams2.settings({
+                dataset: agg
             });
         });
         $scope.url = $location.absUrl() + '/download';

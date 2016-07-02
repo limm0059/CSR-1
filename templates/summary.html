@@ -32,37 +32,49 @@
     </md-toolbar>
     <br>
     <md-content class="container">
-      <table ng-table="tableParams" class="table table-bordered table-striped table-condensed">
-        <tr ng-repeat="row in $data">
-          <td data-title="'Name'" filter="{name: 'text'}" sortable="'name'">{{row.name}}</td>
-          <td data-title="'Email'" filter="{email: 'text'}" sortable="'email'">{{row.email}}</td>
-          <td data-title="'Phone'" filter="{phone: 'number'}" sortable="'phone'">{{row.phone}}</td>
-          <td data-title="'Orders'">
-            <ul class="list-group">
-              <li ng-repeat="o in row.orders" class="list-group-item">
-                <span class="badge">{{ o.qty }}</span> {{ o.name }}
-              </li>
-            </ul>
-          </td>
-          <td data-title="'Total'" filter="{total: 'number'}" sortable="'total'">{{row.total | currency}}</td>
-        </tr>
-      </table>
+      <uib-tabset>
+        <uib-tab index="0" heading="Customers">
+          <table ng-table="tableParams1" class="table table-bordered table-striped table-condensed">
+            <tr ng-repeat="row in $data">
+              <td data-title="'Name'" filter="{name: 'text'}" sortable="'name'">{{row.name}}</td>
+              <td data-title="'Email'" filter="{email: 'text'}" sortable="'email'">{{row.email}}</td>
+              <td data-title="'Phone'" filter="{phone: 'number'}" sortable="'phone'">{{row.phone}}</td>
+              <td data-title="'Orders'">
+                <ul class="list-group">
+                  <li ng-repeat="o in row.orders" class="list-group-item">
+                    <span class="badge">{{ o.qty }}</span> {{ o.name }}
+                  </li>
+                </ul>
+              </td>
+              <td data-title="'Total'" filter="{total: 'number'}" sortable="'total'">{{row.total | currency}}</td>
+            </tr>
+          </table>
+        </uib-tab>
+        <uib-tab index="1" heading="For Us">
+          <table ng-table="tableParams2" class="table table-bordered table-striped table-condensed">
+            <tr ng-repeat="row in $data">
+              <td data-title="'Name'" filter="{name: 'text'}" sortable="'name'">{{row.name}}</td>
+              <td data-title="'Quantity'" filter="{name: 'number'}" sortable="'value'">{{row.qty}}</td>
+            </tr>
+          </table>
+        </uib-tab>
+      </uib-tabset>
+
     </md-content>
     <br>
     <md-card class="container">
       <md-card-title>
         <md-card-title-text>
-          <span class="md-headline">Aggregated Information</span>          
+          <span class="md-headline">Aggregated Information</span>
         </md-card-title-text>
       </md-card-title>
       <md-card-content>
         <p>
-          We will receiving a total of {{ aggregate.total | currency }} from {{ aggregate.order }} orders. <br>
-          And there are {{ aggregate.unique }} unique items, but who would want to know so much?
-        </p>        
+          We will receiving a total of {{ aggregate.total | currency }} from {{ aggregate.order }} orders. <br> And there are {{ aggregate.unique }} unique items, but who would want to know so much?
+        </p>
       </md-card-content>
       <md-card-actions layout="row" layout-align="center end">
-        <a class="md-raised md-primary md-button" ng-href="{{url}}" target="_blank" >To CSV</a>
+        <a class="md-raised md-primary md-button" ng-href="{{url}}" target="_blank">To CSV</a>
       </md-card-actions>
     </md-card>
   </div>

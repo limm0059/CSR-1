@@ -3,6 +3,7 @@ import os
 import csv
 import jinja2
 import webapp2
+from collections import defaultdict
 
 from models import Orders
 
@@ -63,11 +64,17 @@ class Summary(Handler):
     def post(self):
         orders = Orders.get_all()
         ret = []
+        dd = defaultdict(int)
         for i in orders:
             ret.append(i.to_dict())
+            for j in i.orders:
+                dd[j['name']] += 1
 
+        agg = []
+        for key, value in dd.items():
+            agg.append({'name': key, 'qty': value})
         if len(ret) > 0:
-            self.response.write(json.dumps(ret))
+            self.response.write(json.dumps({ 'ret': ret , 'agg': agg}))
         else:
             self.response.write(json.dumps(None))
 
