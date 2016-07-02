@@ -47,7 +47,7 @@
           <div layout="row">
             <md-input-container>
               <label for="phone">Phone</label>
-              <input type="number" name="phone" ng-pattern="/^[\d]{8}$/" required ng-model="phoneBox.phone">
+              <input type="number" id="phone" name="phone" ng-pattern="/^[\d]{8}$/" required ng-model="phoneBox.phone">
               <div ng-messages="form.phone.$error">
                 <div ng-message-exp="['required', 'pattern']">
                   Do you have a phone number that looks like this: 91235678 ?

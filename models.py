@@ -15,6 +15,11 @@ class Orders(ndb.Model):
         return f
 
     @classmethod
+    def get_all(cls):
+        f = cls.query().fetch()
+        return f
+
+    @classmethod
     def set_order(cls, name, phone, email, orders):
         f = cls.query(cls.phone == phone).get()
         if f is not None:

@@ -1,4 +1,4 @@
-angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
+angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable'])
     .controller('formCtrl', function ($scope, $http, $uibModal, InventoryService, $location) {
         var inv = InventoryService;
         $scope.user = {
@@ -102,15 +102,15 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
 
         var promise = null;
         $scope.$watch('phoneBox.phone', function (new_val, old_val) {
-            
+
             if (promise) {
-        	    $scope.hideBall = true;
+                $scope.hideBall = true;
             }
             $timeout.cancel(promise);
             if (!new_val) {
                 return;
             }
-            $scope.hideBall = false;            
+            $scope.hideBall = false;
             var url = $location.absUrl();
             var package = JSON.stringify({ phone: new_val });
 
@@ -118,6 +118,9 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
                 $http.post(url, package).then(function success(response) {
                     $scope.items = response.data;
                     $scope.hideBall = true;
+                    if (!response.data.orders) {
+                        return;
+                    }
                     function open() {
                         var modalInstance = $uibModal.open({
                             animation: true,
@@ -158,16 +161,42 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
                         });
                     }
                     open();
-                    
+
                 }, function error(response) {
                     console.log('Error Data does not Exist');
                     $scope.hideBall = true;
                 });
             }
-
             promise = $timeout(getOrder, 1500);
         });
+    })
+    .controller('SummaryCtrl', function ($http, $scope, NgTableParams, $location) {
 
+        $scope.tableParams = new NgTableParams();
+        $scope.aggregate = {
+            total: 0,
+            order: 0,
+            unique: 0
+        };
+        $http.post($location.absUrl()).then(function success(response) {
+            var data = response.data;
+
+            $scope.aggregate.order = data.length;
+
+            data.forEach(function (element, i) {
+                var total = 0;
+                element.orders.forEach(function (element) {
+                    total += (element.qty * element.price);
+                }, this);
+                element.total = total;
+                $scope.aggregate.unique += element.orders.length;
+                $scope.aggregate.total += total;
+            });
+            $scope.tableParams.settings({
+                dataset: data
+            });
+        });
+        $scope.url = $location.absUrl() + '/download';
     })
     .factory('InventoryService', function () {
         var list = {};
