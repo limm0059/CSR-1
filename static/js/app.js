@@ -9,6 +9,7 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages'])
             drink: []
         };
 
+        console.log($location.absUrl());
         $scope.foods = inv.getFood();
         $scope.drinks = inv.getDrink();
 
