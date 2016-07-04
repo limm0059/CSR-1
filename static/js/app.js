@@ -3,7 +3,7 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable',
         var inv = InventoryService;
         $scope.user = {
             name: '',
-            email: '',
+            email: '@gic.com.sg',
             phone: '',
             orders: []
         };
