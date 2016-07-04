@@ -213,15 +213,15 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable',
         var list = {};
 
         var foods = [
-            { name: 'Roasted Chicken Rice', description: 'Delicious Chicken Rice from Tian Tian @ Maxwell', price: 10, image: '' },
-            { name: 'White Chicken Rice', description: "Everyone's favourite Chicken Rice from Tian Tian @ Maxwell", price: 10, image: '' },
-            { name: 'Ayam Mee Goreng', description: 'Halal: from Hajmeer Kwaja', price: 10, image: '' },
-            { name: 'Ayam Nasi Briyani', description: 'Halal: from Hajmeer Kwaja', price: 10, image: '' },
-            { name: 'Dry Prawn Noodle', description: "Vegetarian: from Shu Shi", price: 10, image: '' },
-            { name: 'Laksa', description: "Vegetarian: from Shu Shi", price: 10, image: '' },
-            { name: 'Vegetarian Large Set', description: "Vegetarian: from Shun Cheng Shu Shi", price: 10, image: '' },
-            { name: 'Fish Porridge', description: " from Han Kee Fish Soup @ Amoy", price: 10, image: '' },
-            { name: 'Fish Noodle', description: " from Han Kee Fish Soup @ Amoy", price: 10, image: '' },
+            { name: 'Roasted Chicken Rice', description: 'Delicious Chicken Rice from Tian Tian @ Maxwell', price: 10, image: 'tiantianroast.jpg' },
+            { name: 'White Chicken Rice', description: "Everyone's favourite Chicken Rice from Tian Tian @ Maxwell", price: 10, image: 'tiantianwhite.jpg' },
+            { name: 'Ayam Mee Goreng', description: 'Halal: from Hajmeer Kwaja', price: 10, image: 'meegoreng.jpeg' },
+            { name: 'Ayam Nasi Briyani', description: 'Halal: from Hajmeer Kwaja', price: 10, image: 'nasibriyanichicken.jpeg' },
+            { name: 'Dry Prawn Noodle', description: " from Shu Shi", price: 10, image: 'prawnnoodle.jpeg' },
+            { name: 'Laksa', description: " from Shu Shi", price: 10, image: 'laksa.jpeg' },
+            { name: 'Vegetarian Large Set', description: "Vegetarian: from Shun Cheng Shu Shi", price: 10, image: 'vegetarian.jpg' },
+            { name: 'Fish Porridge', description: " from Han Kee Fish Soup @ Amoy", price: 10, image: 'fishporridge.jpg' },
+            { name: 'Fish Noodle', description: " from Han Kee Fish Soup @ Amoy", price: 10, image: 'hankeenoodle.jpeg' },
         ];
 
         var drinks = [
