@@ -1,5 +1,5 @@
-angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable'])
-    .controller('formCtrl', function ($scope, $http, $uibModal, InventoryService, $location) {
+angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable', 'bootstrapLightbox'])
+    .controller('formCtrl', function ($scope, $http, $uibModal, InventoryService, $location, Lightbox) {
         var inv = InventoryService;
         $scope.user = {
             name: '',
@@ -8,9 +8,12 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable']
             orders: []
         };
 
-        console.log($location.absUrl());
-        $scope.foods = inv.getFood();
-        $scope.drinks = inv.getDrink();
+        $scope.test = function (args) {
+            console.log(args);
+        };
+        $scope.foods = inv.getFoods();
+        $scope.drinks = inv.getDrinks();
+        $scope.gifts = inv.getGifts();
 
         $scope.toggleOrder = function (item) {
             item.selected = !item.selected;
@@ -27,12 +30,11 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable']
                 return;
             }
 
-            $scope.foods.forEach(function (element) {
-                if (element.selected) $scope.user.orders.push(element);
-            });
-
-            $scope.drinks.forEach(function (element) {
-                if (element.selected) $scope.user.orders.push(element);
+            var arrs = [$scope.foods, $scope.drinks, $scope.gifts];
+            arrs.forEach(function (arr) {
+                arr.forEach(function (e) {
+                    if (e.selected) $scope.user.orders.push(e);
+                });
             });
 
             var modalInstance = $uibModal.open({
@@ -185,7 +187,6 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable']
         $http.post($location.absUrl()).then(function success(response) {
             var data = response.data.ret;
             var agg = response.data.agg;
-            console.log(agg);
 
             $scope.aggregate.order = data.length;
 
@@ -212,32 +213,45 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable']
         var list = {};
 
         var foods = [
-            { category: 'Halal', name: 'Food 1', price: 10 },
-            { category: 'Halal', name: 'Food 2', price: 12 },
-            { category: 'Vegetarian', name: 'Food 3', price: 10 }
+            { name: 'Roasted Chicken Rice', description: 'Delicious Chicken Rice from Tian Tian @ Maxwell', price: 10, image: '' },
+            { name: 'White Chicken Rice', description: "Everyone's favourite Chicken Rice from Tian Tian @ Maxwell", price: 10, image: '' },
+            { name: 'Ayam Mee Goreng', description: 'Halal: from Hajmeer Kwaja', price: 10, image: '' },
+            { name: 'Ayam Nasi Briyani', description: 'Halal: from Hajmeer Kwaja', price: 10, image: '' },
+            { name: 'Dry Prawn Noodle', description: "Vegetarian: from Shu Shi", price: 10, image: '' },
+            { name: 'Laksa', description: "Vegetarian: from Shu Shi", price: 10, image: '' },
+            { name: 'Vegetarian Large Set', description: "Vegetarian: from Shun Cheng Shu Shi", price: 10, image: '' },
+            { name: 'Fish Porridge', description: " from Han Kee Fish Soup @ Amoy", price: 10, image: '' },
+            { name: 'Fish Noodle', description: " from Han Kee Fish Soup @ Amoy", price: 10, image: '' },
         ];
-
-        foods.forEach(function (element) {
-            element.selected = false;
-            element.qty = 1;
-        }, this);
 
         var drinks = [
-            { name: "Kopi", price: 4 },
-            { name: "Teh", price: 4 }
+            { name: "Kopi", price: 4, description: "Aromatic and delicious", image: 'kopi.png' },
+            { name: "Teh", price: 4, description: "The best money can buy", image: 'teh.jpg' }
         ];
 
-        drinks.forEach(function (element) {
-            element.selected = false;
-            element.qty = 1;
+        var gifts = [
+            { name: "Sunflower", description: "Single Stalk", price: 5, image: 'chocolate.jpg' },
+            { name: "Ritter Sport Chocolate", description: "100g assorted flavours", price: 5, image: 'sunflower.jpg' },
+            { name: "Sunflower and Chocolate", description: "Combined gift option", price: 8, image: 'sunchoc.jpg' }
+        ];
+
+        [foods, drinks, gifts].forEach(function (arr) {
+            arr.forEach(function (e) {
+                e.selected = false;
+                e.qty = 1;
+            });
         });
 
-        list.getFood = function () {
+        list.getFoods = function () {
             return foods;
         };
 
-        list.getDrink = function () {
+        list.getDrinks = function () {
             return drinks;
+        };
+
+        list.getGifts = function () {
+            return gifts;
         };
 
         return list;

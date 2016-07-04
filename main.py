@@ -1,9 +1,10 @@
+import csv
 import json
 import os
-import csv
+from collections import defaultdict
+
 import jinja2
 import webapp2
-from collections import defaultdict
 
 from models import Orders
 
@@ -30,7 +31,8 @@ class Handler(webapp2.RequestHandler):
 
 class Form(Handler):
     def get(self):
-        self.render('form.html')
+        payload = { 'ctrl': 'formCtrl' }
+        self.render('form.html', **payload)
 
     def post(self):
         data = json.loads(self.request.body)
@@ -39,12 +41,13 @@ class Form(Handler):
         email = data['email']
         orders = data['orders']
         Orders.set_order(name, phone, email, orders)
-        self.response.write(json.dumps({"done": True}))
+        self.response.write(json.dumps({ "done": True }))
 
 
 class Index(Handler):
     def get(self):
-        self.render('index.html')
+        payload = { 'ctrl': 'indexCtrl' }
+        self.render('index.html', **payload)
 
     def post(self):
         data = json.loads(self.request.body)
@@ -59,7 +62,8 @@ class Index(Handler):
 
 class Summary(Handler):
     def get(self):
-        self.render('summary.html')
+        payload = { 'ctrl': 'SummaryCtrl' }
+        self.render('summary.html', **payload)
 
     def post(self):
         orders = Orders.get_all()
@@ -72,9 +76,9 @@ class Summary(Handler):
 
         agg = []
         for key, value in dd.items():
-            agg.append({'name': key, 'qty': value})
+            agg.append({ 'name': key, 'qty': value })
         if len(ret) > 0:
-            self.response.write(json.dumps({ 'ret': ret , 'agg': agg}))
+            self.response.write(json.dumps({ 'ret': ret, 'agg': agg }))
         else:
             self.response.write(json.dumps(None))
 

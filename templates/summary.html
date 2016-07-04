@@ -1,83 +1,57 @@
-<!DOCTYPE html>
-<html ng-app="csrApp">
-
-<head>
-  <title>Super Heroic Life Saver</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="static/css/main.css">
-
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
-  <script src="static/js/ui-bootstrap.min.js"></script>
-
-  <link rel="stylesheet" href="static/css/ng-table.min.css">
-  <script src="static/js/ng-table.min.js" type="text/javascript"></script>
-</head>
-
-<body ng-controller="SummaryCtrl as ctrl" ng-cloak>
-  <div layout="column">
-    <md-toolbar class="md-tall">
-      <span flex></span>
-      <h2 class="md-toolbar-tools md-display-3">
+{% extends "base.html" %} {% block content %}
+<div layout="column">
+  <md-toolbar class="md-tall">
+    <span flex></span>
+    <h2 class="md-toolbar-tools md-display-3">
         <span class="md-flex container">Here's a summary of all our records.</span>
       </h2>
-    </md-toolbar>
-    <br>
-    <md-content class="container">
-      <uib-tabset>
-        <uib-tab index="0" heading="Customers">
-          <table ng-table="tableParams1" class="table table-bordered table-striped table-condensed">
-            <tr ng-repeat="row in $data">
-              <td data-title="'Name'" filter="{name: 'text'}" sortable="'name'">{{row.name}}</td>
-              <td data-title="'Email'" filter="{email: 'text'}" sortable="'email'">{{row.email}}</td>
-              <td data-title="'Phone'" filter="{phone: 'number'}" sortable="'phone'">{{row.phone}}</td>
-              <td data-title="'Orders'">
-                <ul class="list-group">
-                  <li ng-repeat="o in row.orders" class="list-group-item">
-                    <span class="badge">{{ o.qty }}</span> {{ o.name }}
-                  </li>
-                </ul>
-              </td>
-              <td data-title="'Total'" filter="{total: 'number'}" sortable="'total'">{{row.total | currency}}</td>
-            </tr>
-          </table>
-        </uib-tab>
-        <uib-tab index="1" heading="For Us">
-          <table ng-table="tableParams2" class="table table-bordered table-striped table-condensed">
-            <tr ng-repeat="row in $data">
-              <td data-title="'Name'" filter="{name: 'text'}" sortable="'name'">{{row.name}}</td>
-              <td data-title="'Quantity'" filter="{name: 'number'}" sortable="'value'">{{row.qty}}</td>
-            </tr>
-          </table>
-        </uib-tab>
-      </uib-tabset>
+  </md-toolbar>
+  <br>
+  <md-content class="container">
+    <uib-tabset>
+      <uib-tab index="0" heading="Customers">
+        <table ng-table="tableParams1" class="table table-bordered table-striped table-condensed">
+          <tr ng-repeat="row in $data">
+            <td data-title="'Name'" filter="{name: 'text'}" sortable="'name'">{{row.name}}</td>
+            <td data-title="'Email'" filter="{email: 'text'}" sortable="'email'">{{row.email}}</td>
+            <td data-title="'Phone'" filter="{phone: 'number'}" sortable="'phone'">{{row.phone}}</td>
+            <td data-title="'Orders'">
+              <ul class="list-group">
+                <li ng-repeat="o in row.orders" class="list-group-item">
+                  <span class="badge">{{ o.qty }}</span> {{ o.name }}
+                </li>
+              </ul>
+            </td>
+            <td data-title="'Total'" filter="{total: 'number'}" sortable="'total'">{{row.total | currency}}</td>
+          </tr>
+        </table>
+      </uib-tab>
+      <uib-tab index="1" heading="For Us">
+        <table ng-table="tableParams2" class="table table-bordered table-striped table-condensed">
+          <tr ng-repeat="row in $data">
+            <td data-title="'Name'" filter="{name: 'text'}" sortable="'name'">{{row.name}}</td>
+            <td data-title="'Quantity'" filter="{name: 'number'}" sortable="'value'">{{row.qty}}</td>
+          </tr>
+        </table>
+      </uib-tab>
+    </uib-tabset>
 
-    </md-content>
-    <br>
-    <md-card class="container">
-      <md-card-title>
-        <md-card-title-text>
-          <span class="md-headline">Aggregated Information</span>
-        </md-card-title-text>
-      </md-card-title>
-      <md-card-content>
-        <p>
-          We will receiving a total of {{ aggregate.total | currency }} from {{ aggregate.order }} orders. <br> And there are {{ aggregate.unique }} unique items, but who would want to know so much?
-        </p>
-      </md-card-content>
-      <md-card-actions layout="row" layout-align="center end">
-        <a class="md-raised md-primary md-button" ng-href="{{url}}" target="_blank">To CSV</a>
-      </md-card-actions>
-    </md-card>
-  </div>
-  <script src="static/js/app.js"></script>
-
-</body>
+  </md-content>
+  <br>
+  <md-card class="container">
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Aggregated Information</span>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+      <p>
+        We will receiving a total of {{ aggregate.total | currency }} from {{ aggregate.order }} orders. <br> And there is a total of {{ aggregate.unique }} items, but who would want to know so much?
+      </p>
+    </md-card-content>
+    <md-card-actions layout="row" layout-align="center end">
+      <a class="md-raised md-primary md-button" ng-href="{{url}}" target="_blank">To CSV</a>
+    </md-card-actions>
+  </md-card>
+</div>
+{% endblock %}
