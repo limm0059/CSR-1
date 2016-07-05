@@ -1,6 +1,8 @@
 angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable', 'bootstrapLightbox'])
     .controller('formCtrl', function ($scope, $http, $uibModal, InventoryService, $location, Lightbox) {
-        var inv = InventoryService;
+        $scope.intro = "Sharing Food with the Disenfranchised\n13th July 2016 Wednesday";
+		
+		var inv = InventoryService;
         $scope.user = {
             name: '',
             email: '@gic.com.sg',
@@ -91,7 +93,9 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable',
 
     })
     .controller('indexCtrl', function ($location, $window, $scope, $http, $timeout, $uibModal) {
-        $scope.toForm = function () {
+        $scope.intro = "Sharing Food with the Disenfranchised\n13th July 2016 Wednesday";
+		
+		$scope.toForm = function () {
             $window.location.href = $location.absUrl() + 'form';
         };
         $scope.phoneBox = {
@@ -230,8 +234,8 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable',
         ];
 
         var gifts = [
-            { name: "Sunflower", description: "Single Stalk", price: 5, image: 'chocolate.jpg' },
-            { name: "Ritter Sport Chocolate", description: "100g assorted flavours", price: 5, image: 'sunflower.jpg' },
+            { name: "Sunflower", description: "Single Stalk", price: 5, image: 'sunflower.jpg' },
+            { name: "Ritter Sport Chocolate", description: "100g assorted flavours", price: 5, image: 'chocolate.jpg' },
             { name: "Sunflower and Chocolate", description: "Combined gift option", price: 8, image: 'sunchoc.jpg' }
         ];
 
