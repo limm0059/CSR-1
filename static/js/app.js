@@ -1,6 +1,6 @@
 angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable', 'bootstrapLightbox'])
     .controller('formCtrl', function ($scope, $http, $uibModal, InventoryService, $location, Lightbox) {
-        $scope.intro = "Hello,\nWe are GIC interns raising funds for our CSR project. All proceeds will go to buying food supplies for our beneficiaries, residents in 1 room flats in XXXX neighborhood. Food and items will be available for collection at Level 38 on 13 July 2016, 11am till 3pm, payment only in cash, to be made then. (Exact change preferred.)";
+        $scope.intro = "Sharing Food with the Disenfranchised\n13th July 2016 Wednesday";
 		
 		var inv = InventoryService;
         $scope.user = {
@@ -93,7 +93,7 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable',
 
     })
     .controller('indexCtrl', function ($location, $window, $scope, $http, $timeout, $uibModal) {
-        $scope.intro = "Hello,\nWe are GIC interns raising funds for our CSR project. All proceeds will go to buying food supplies for our beneficiaries, residents in 1 room flats in XXXX neighborhood. Food and items will be available for collection at Level 38 on 13 July 2016, 11am till 3pm, payment only in cash, to be made then. (Exact change preferred.)";
+        $scope.intro = "Sharing Food with the Disenfranchised\n13th July 2016 Wednesday";
 		
 		$scope.toForm = function () {
             $window.location.href = $location.absUrl() + 'form';
@@ -234,8 +234,8 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable',
         ];
 
         var gifts = [
-            { name: "Sunflower", description: "Single Stalk", price: 5, image: 'chocolate.jpg' },
-            { name: "Ritter Sport Chocolate", description: "100g assorted flavours", price: 5, image: 'sunflower.jpg' },
+            { name: "Sunflower", description: "Single Stalk", price: 5, image: 'sunflower.jpg' },
+            { name: "Ritter Sport Chocolate", description: "100g assorted flavours", price: 5, image: 'chocolate.jpg' },
             { name: "Sunflower and Chocolate", description: "Combined gift option", price: 8, image: 'sunchoc.jpg' }
         ];
 
