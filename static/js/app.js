@@ -1,6 +1,7 @@
 angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable', 'bootstrapLightbox'])
     .controller('formCtrl', function ($scope, $http, $uibModal, InventoryService, $location, Lightbox) {
-        $scope.intro = "Sharing Food with the Disenfranchised\n13th July 2016 Wednesday";
+        $scope.intro1 = "Sharing Food with the Disenfranchised";
+        $scope.intro2 = "13th July 2016 Wednesday";
 		
 		var inv = InventoryService;
         $scope.user = {
@@ -93,7 +94,8 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable',
 
     })
     .controller('indexCtrl', function ($location, $window, $scope, $http, $timeout, $uibModal) {
-        $scope.intro = "Sharing Food with the Disenfranchised\n13th July 2016 Wednesday";
+        $scope.intro1 = "Sharing Food with the Disenfranchised";
+        $scope.intro2 = "13th July 2016 Wednesday";
 		
 		$scope.toForm = function () {
             $window.location.href = $location.absUrl() + 'form';
