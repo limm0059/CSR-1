@@ -49,8 +49,8 @@
             <md-divider></md-divider>
             <md-list>
                 <md-list-item ng-repeat="food in foods" class="md-3-line" md-ink-ripple="#bbb" ng-click="toggleOrder(food)">
-                    <img ng-src="https://d1nqx6es26drid.cloudfront.net/app/assets/img/logo_mcd.png" class="img-circle" style="width: 15%; height: 15%; padding-right:2em;" />
-                    <div class="md-list-item-text" layout="column">
+                    <img ng-src="static/images/{{food.image}}" class="img-circle img-responsive img-thumbnail" style="width: 15%; height: 15%;" />
+                    <div class="md-list-item-text" layout="column" style="padding-left: 2em">
                         <h3> {{ food.name }} </h3>
                         <h4> {{ food.description }} </h4>
                         <p> {{ food.price | currency }}</p>
@@ -75,8 +75,8 @@
             <md-divider></md-divider>
             <md-list>
                 <md-list-item class="md-3-line" ng-repeat="drink in drinks" md-ink-ripple="#bbb" ng-click="toggleOrder(drink)">
-                    <img ng-src="/static/images/{{drink.image}}" class="img-circle" style="width: 15%; height: 15%; padding-right:2em;" />
-                    <div class="md-list-item-text">
+                    <img ng-src="/static/images/{{drink.image}}" class="img-circle img-responsive img-thumbnail" style="width: 15%; height: 15%;" />
+                    <div class="md-list-item-text"  style="padding-left: 2em">
                         <h3>{{ drink.name }}</h3>
                         <h4>{{ drink.description }}</h4>
                         <p>{{ drink.price | currency }}</p>
@@ -100,8 +100,8 @@
             <md-divider></md-divider>
             <md-list>
                 <md-list-item ng-repeat="gift in gifts" class="md-3-line" md-ink-ripple="#bbb" ng-click="toggleOrder(gift)">
-                    <img ng-src="/static/images/{{gift.image}}" class="img-circle" style="width: 15%; height: 15%; padding-right:2em;" />
-                    <div class="md-list-item-text md-3-line">
+                    <img ng-src="/static/images/{{gift.image}}" class="img-circle img-responsive img-thumbnail" style="width: 15%; height: 15%;" />
+                    <div class="md-list-item-text md-3-line"  style="padding-left: 2em">
                         <h3>{{ gift.name }}</h3>
                         <h4>{{ gift.description }}</h4>
                         <p>{{ gift.price | currency }}</p>
