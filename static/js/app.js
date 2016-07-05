@@ -1,6 +1,8 @@
 angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable', 'bootstrapLightbox'])
     .controller('formCtrl', function ($scope, $http, $uibModal, InventoryService, $location, Lightbox) {
-        var inv = InventoryService;
+        $scope.intro = "Hello,\nWe are GIC interns raising funds for our CSR project. All proceeds will go to buying food supplies for our beneficiaries, residents in 1 room flats in XXXX neighborhood. Food and items will be available for collection at Level 38 on 13 July 2016, 11am till 3pm, payment only in cash, to be made then. (Exact change preferred.)";
+		
+		var inv = InventoryService;
         $scope.user = {
             name: '',
             email: '@gic.com.sg',
@@ -91,7 +93,9 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable',
 
     })
     .controller('indexCtrl', function ($location, $window, $scope, $http, $timeout, $uibModal) {
-        $scope.toForm = function () {
+        $scope.intro = "Hello,\nWe are GIC interns raising funds for our CSR project. All proceeds will go to buying food supplies for our beneficiaries, residents in 1 room flats in XXXX neighborhood. Food and items will be available for collection at Level 38 on 13 July 2016, 11am till 3pm, payment only in cash, to be made then. (Exact change preferred.)";
+		
+		$scope.toForm = function () {
             $window.location.href = $location.absUrl() + 'form';
         };
         $scope.phoneBox = {
