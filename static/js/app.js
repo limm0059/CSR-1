@@ -226,7 +226,7 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable',
             { name: 'Dry Prawn Noodle', description: " from Shu Shi", price: 10, image: 'prawnnoodle.jpeg' },
             { name: 'Laksa', description: " from Shu Shi", price: 10, image: 'laksa.jpeg' },
             { name: 'Vegetarian Large Set', description: "Vegetarian: from Shun Cheng Shu Shi", price: 10, image: 'vegetarian.jpg' },
-            { name: 'Fish Porridge', description: " from Han Kee Fish Soup @ Amoy", price: 10, image: 'fishporridge.jpg' },
+            { name: 'Fish Rice', description: " from Han Kee Fish Soup @ Amoy", price: 10, image: 'fishrice.jpg' },
             { name: 'Fish Noodle', description: " from Han Kee Fish Soup @ Amoy", price: 10, image: 'hankeenoodle.jpeg' },
         ];
 
