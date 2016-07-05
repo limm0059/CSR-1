@@ -6,12 +6,15 @@
             <span class="md-flex container"><span class="md-headline">{{ intro1 }}</span> <br> {{intro2}}</span>
         </h2>
     </md-toolbar>
-    <form name="csrForm">
+    <form name="csrForm" flex>
         <md-card class="container">
-            <h2>Contacts</h2>
-            <md-divider></md-divider>
-
-            <md-content layout-padding>
+            <md-card-title>
+                <md-card-title-text>
+                    <h2>Contacts</h2>
+                </md-card-title-text>
+            </md-card-title>
+            <md-divider style="height: 1px; background-color: #039be5"></md-divider>
+            <md-card-content layout-padding flex="initial">
                 <md-input-container class="md-icon-float md-block">
                     <label>Name</label>
                     <md-icon><i class="material-icons">android</i></md-icon>
@@ -41,21 +44,26 @@
                         </div>
                     </div>
                 </md-input-container>
-            </md-content>
+            </md-card-content>
         </md-card>
 
-        <md-card class="container">
-            <h2>Food</h2>
-            <md-divider></md-divider>
-            <md-list>
-                <md-list-item ng-repeat="food in foods" class="md-3-line" md-ink-ripple="#bbb" ng-click="toggleOrder(food)">
-                    <img ng-src="static/images/{{food.image}}" class="img-circle img-responsive img-thumbnail" style="width: 15%; height: 15%;" />
-                    <div class="md-list-item-text" layout="column" style="padding-left: 2em">
-                        <h3> {{ food.name }} </h3>
-                        <h4> {{ food.description }} </h4>
-                        <p> {{ food.price | currency }}</p>
-                    </div>
-                    <span ng-if="food.selected">
+        <md-card class="container" layout="row" layout-wrap>
+            <md-card-title flex="100">
+                <md-card-title-text>
+                    <h2>Food</h2>
+                </md-card-title-text>
+            </md-card-title>
+            <md-divider class="divider-line" flex="100"></md-divider>
+            <md-card-content flex="100">
+                <md-list layout="column">
+                    <md-list-item ng-repeat="food in foods" class="md-3-line" md-ink-ripple="#bbb" ng-click="toggleOrder(food)">
+                        <img ng-src="static/images/{{food.image}}" class="img-circle img-responsive img-thumbnail" style="width: 15%; height: 15%;" />
+                        <div class="md-list-item-text" layout="column" style="padding-left: 2em">
+                            <h3> {{ food.name }} </h3>
+                            <h4> {{ food.description }} </h4>
+                            <p> {{ food.price | currency }}</p>
+                        </div>
+                        <span ng-if="food.selected">
                             <md-input-container style="transform: translateY(14px)">
                                 <label>Quantity</label>
                                 <input type="number" min="1" ng-model="foods[$index].qty" name="food" ng-pattern="/^[\d]+$/" />
@@ -64,24 +72,30 @@
                                 </div>
                             </md-input-container>
                         </span>
-                    <md-checkbox aria-label="checkboxFood" class="md-secondary" ng-checked="food.selected" ng-click="toggleOrder(food)"></md-checkbox>
-                    <md-divider></md-divider>
-                </md-list-item>
-            </md-list>
+                        <md-checkbox aria-label="checkboxFood" class="md-secondary" ng-checked="food.selected" ng-click="toggleOrder(food)"></md-checkbox>
+                        <md-divider></md-divider>
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
         </md-card>
 
-        <md-card class="container">
-            <h2>Drinks</h2>
-            <md-divider></md-divider>
-            <md-list>
-                <md-list-item class="md-3-line" ng-repeat="drink in drinks" md-ink-ripple="#bbb" ng-click="toggleOrder(drink)">
-                    <img ng-src="/static/images/{{drink.image}}" class="img-circle img-responsive img-thumbnail" style="width: 15%; height: 15%;" />
-                    <div class="md-list-item-text"  style="padding-left: 2em">
-                        <h3>{{ drink.name }}</h3>
-                        <h4>{{ drink.description }}</h4>
-                        <p>{{ drink.price | currency }}</p>
-                    </div>
-                    <span ng-if="drink.selected">
+        <md-card class="container" layout="row" layout-wrap>
+            <md-card-title flex="100">
+                <md-card-title-text>
+                    <h2>Drinks</h2>
+                </md-card-title-text>
+            </md-card-title>
+            <md-divider class="divider-line" flex="100"></md-divider>
+            <md-card-content flex="100">
+                <md-list layout="column">
+                    <md-list-item class="md-3-line" ng-repeat="drink in drinks" md-ink-ripple="#bbb" ng-click="toggleOrder(drink)">
+                        <img ng-src="/static/images/{{drink.image}}" class="img-circle img-responsive img-thumbnail" style="width: 15%; height: 15%;" />
+                        <div class="md-list-item-text" style="padding-left: 2em">
+                            <h3>{{ drink.name }}</h3>
+                            <h4>{{ drink.description }}</h4>
+                            <p>{{ drink.price | currency }}</p>
+                        </div>
+                        <span ng-if="drink.selected">
                             <md-input-container style="transform: translateY(14px)">
                             <label>Quantity</label>
                             <input type="number" min="1" ng-model="drinks[$index].qty" name="drink" ng-pattern="/^[\d]+$/">
@@ -90,23 +104,30 @@
                             </div>
                             </md-input-container>
                         </span>
-                    <md-checkbox aria-label="checkboxDrink" class="md-secondary" ng-checked="drink.selected" ng-click="toggleOrder(drink)"></md-checkbox>
-                    <md-divider></md-divider>
-                </md-list-item>
-            </md-list>
+                        <md-checkbox aria-label="checkboxDrink" class="md-secondary" ng-checked="drink.selected" ng-click="toggleOrder(drink)"></md-checkbox>
+                        <md-divider></md-divider>
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
         </md-card>
-        <md-card class="container">
-            <h2>Gifts</h2>
-            <md-divider></md-divider>
-            <md-list>
-                <md-list-item ng-repeat="gift in gifts" class="md-3-line" md-ink-ripple="#bbb" ng-click="toggleOrder(gift)">
-                    <img ng-src="/static/images/{{gift.image}}" class="img-circle img-responsive img-thumbnail" style="width: 15%; height: 15%;" />
-                    <div class="md-list-item-text md-3-line"  style="padding-left: 2em">
-                        <h3>{{ gift.name }}</h3>
-                        <h4>{{ gift.description }}</h4>
-                        <p>{{ gift.price | currency }}</p>
-                    </div>
-                    <span ng-if="gift.selected">
+
+        <md-card class="container" layout="row" layout-wrap>
+            <md-card-title flex="100">
+                <md-card-title-text>
+                    <h2>Gifts</h2>
+                </md-card-title-text>
+            </md-card-title>
+            <md-divider class="divider-line" flex="100"></md-divider>
+            <md-card-content flex="100">
+                <md-list layout="column">
+                    <md-list-item ng-repeat="gift in gifts" class="md-3-line" md-ink-ripple="#bbb" ng-click="toggleOrder(gift)">
+                        <img ng-src="/static/images/{{gift.image}}" class="img-circle img-responsive img-thumbnail" style="width: 15%; height: 15%;" />
+                        <div class="md-list-item-text md-3-line" style="padding-left: 2em">
+                            <h3>{{ gift.name }}</h3>
+                            <h4>{{ gift.description }}</h4>
+                            <p>{{ gift.price | currency }}</p>
+                        </div>
+                        <span ng-if="gift.selected">
                         <md-input-container style="transform: translateY(14px)">
                             <label>Quantity</label>
                             <input type="number" min="1" ng-model="gifts[$index].qty" name="gift" ng-pattern="/^[\d]+$/">
@@ -115,16 +136,18 @@
                             </div>
                         </md-input-container>
                     </span>
-                    <md-checkbox aria-label="checkboxGift" class="md-secondary" ng-checked="gift.selected" ng-click="toggleOrder(gift)"></md-checkbox>
-                    <md-divider></md-divider>
-                </md-list-item>
-            </md-list>
+                        <md-checkbox aria-label="checkboxGift" class="md-secondary" ng-checked="gift.selected" ng-click="toggleOrder(gift)"></md-checkbox>
+                        <md-divider></md-divider>
+                    </md-list-item>
+                </md-list>
+            </md-card-content>
+        </md-card>
+        <md-card class="container">
+            <md-button ng-click="open(csrForm)">Submit</md-button>
         </md-card>
     </form>
 
-    <md-card class="container">
-        <md-button ng-click="open(csrForm)">Submit</md-button>
-    </md-card>
+
 </div>
 <script type="text/ng-template" id="myModalContent.html">
     <div class="modal-header">
