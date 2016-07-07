@@ -69,10 +69,11 @@ class Summary(Handler):
         orders = Orders.get_all()
         ret = []
         dd = defaultdict(int)
+
         for i in orders:
             ret.append(i.to_dict())
             for j in i.orders:
-                dd[j['name']] += 1
+                dd[j['name']] += j['qty']
 
         agg = []
         for key, value in dd.items():
