@@ -37,7 +37,7 @@
                 <md-input-container class="md-icon-float md-block">
                     <label>Phone</label>
                     <md-icon><i class="material-icons">settings_phone</i></md-icon>
-                    <input ng-model="user.phone" type="number" required ng-pattern="/^[89][\d]{7}$/" name="phone">
+                    <input ng-model="user.phone" type="number" required ng-pattern="/^[689][\d]{7}$/" name="phone">
                     <div ng-messages="csrForm.phone.$error">
                         <div ng-message-exp="['required', 'pattern']">
                             We need this to verify you! So your phone must be a Singapore number without +65 (country code) and without space and hyphen. Example: 91234567
