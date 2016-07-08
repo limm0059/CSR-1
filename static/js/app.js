@@ -1,5 +1,5 @@
 angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable', 'bootstrapLightbox'])
-    .controller('formCtrl', function ($scope, $http, $uibModal, InventoryService, $location, Lightbox) {
+    .controller('formCtrl', function ($scope, $http, $uibModal, InventoryService, $location, Lightbox, $timeout) {
         $scope.intro1 = "Sharing Food with the Disenfranchised";
         $scope.intro2 = "13th July 2016 Wednesday";
 		
@@ -43,7 +43,23 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable',
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'myModalContent.html',
-                controller: function ($scope, $uibModalInstance, items, $http, $location, $window) {
+                controller: function ($scope, $uibModalInstance, items, $http, $location, $window, $mdDialog) {
+                    
+                    $scope.has_past_orders = false;
+                    var ready = false;
+                    var past_items_url = $location.absUrl().slice(0, -4);
+                    var package = JSON.stringify({ phone: items.phone });
+                    $http.post(past_items_url, package).then(
+                        function success(response) {
+                            var data = response.data;
+                            console.log(data);
+                            ready = true;
+                            if (!data) return;
+                            $scope.has_past_orders = true;
+                        }, function error(response) {
+                            ready = true;
+                        });
+
                     $scope.items = items.orders;
                     $scope.contacts = {
                         name: items.name,
@@ -59,19 +75,37 @@ angular.module('csrApp', ['ngMaterial', 'ui.bootstrap', 'ngMessages', 'ngTable',
                     items.total = $scope.total;
 
                     $scope.ok = function (params) {
-                        console.log(JSON.stringify(items));
-                        var url = $location.absUrl();
-
-                        $http.post(url, JSON.stringify(items)).then(
-                            function success(response) {
-                                console.log("Success", response);
-                                alert("And you've helped save the world.. Thank you!");
-                                $window.location.href = $location.absUrl();
-                            }, function error(response) {
-                                console.log("Something went horribly wrong. Check url endpoint first");
-                                alert("SHIT!");
-                            }
-                        );
+                        if (!ready) {
+                            alert("Hold on a moment, we're still setting things up..");
+                            return;
+                        }  
+                        if ($scope.has_past_orders) {
+                            console.log("in has_past_orders");
+                            $http.post($location.absUrl(), JSON.stringify(items)).then(
+                                function success(response) {
+                                    console.log("Success", response);
+                                    alert("Order UPDATED! Note that this is an update, not an add on!");
+                                    $window.location.href = $location.absUrl();
+                                }, function error(response) {
+                                    console.log("Something went horribly wrong. Check url endpoint first");
+                                    alert("SHIT!");
+                                }
+                            );
+                        } else {
+                            console.log(JSON.stringify(items));
+                            var url = $location.absUrl();
+                            $http.post(url, JSON.stringify(items)).then(
+                                function success(response) {
+                                    console.log("Success", response);
+                                    alert("And you've helped save the world.. Thank you!");
+                                    $window.location.href = $location.absUrl();
+                                }, function error(response) {
+                                    console.log("Something went horribly wrong. Check url endpoint first");
+                                    alert("SHIT!");
+                                }
+                            );
+                        }
+                        
                     };
                     $scope.cancel = function () {
                         $uibModalInstance.dismiss('cancel');

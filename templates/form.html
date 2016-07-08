@@ -66,9 +66,9 @@
                         <span ng-if="food.selected">
                             <md-input-container style="transform: translateY(14px)">
                                 <label>Quantity</label>
-                                <input type="number" min="1" ng-model="foods[$index].qty" name="food" ng-pattern="/^[\d]+$/" />
+                                <input type="number" min="1" ng-model="foods[$index].qty" required name="food" ng-pattern="/^[\d]+$/" />
                                 <div ng-messages="csrForm.food.$error">
-                                    <div ng-message-exp="['min', 'pattern']">You should at least select 1. And it must not be a decimal!</div>
+                                    <div ng-message-exp="['min', 'pattern', 'required']">You should at least select 1. And it must not be a decimal!</div>
                                 </div>
                             </md-input-container>
                         </span>
@@ -98,9 +98,9 @@
                         <span ng-if="drink.selected">
                             <md-input-container style="transform: translateY(14px)">
                             <label>Quantity</label>
-                            <input type="number" min="1" ng-model="drinks[$index].qty" name="drink" ng-pattern="/^[\d]+$/">
+                            <input type="number" min="1" ng-model="drinks[$index].qty" name="drink" required ng-pattern="/^[\d]+$/">
                             <div ng-messages="csrForm.drink.$error">
-                                <div ng-message-exp="['min', 'pattern']">You should at least select 1. And it must not be a decimal!</div>
+                                <div ng-message-exp="['min', 'pattern', 'required']">You should at least select 1. And it must not be a decimal!</div>
                             </div>
                             </md-input-container>
                         </span>
@@ -130,9 +130,9 @@
                         <span ng-if="gift.selected">
                         <md-input-container style="transform: translateY(14px)">
                             <label>Quantity</label>
-                            <input type="number" min="1" ng-model="gifts[$index].qty" name="gift" ng-pattern="/^[\d]+$/">
+                            <input type="number" min="1" ng-model="gifts[$index].qty" required name="gift" ng-pattern="/^[\d]+$/">
                             <div ng-messages="csrForm.gift.$error">
-                                <div ng-message-exp="['min', 'pattern']">You should at least select 1. And it must not be a decimal!</div>
+                                <div ng-message-exp="['min', 'pattern', 'required']">You should at least select 1. And it must not be a decimal!</div>
                             </div>
                         </md-input-container>
                     </span>

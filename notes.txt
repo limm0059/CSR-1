@@ -17,3 +17,5 @@ C:\Users\Daniel\PycharmProjects\GAE_VENV\Scripts\python "C:\Program Files (x86)\
 Remarks:
 You'll need to install Google App Engine SDK (Python)
 Open a terminal, cd to the folder holding the root directory and run the localhost snippet above
+
+D:\InternshipGIC\CSR\dev_appserver.py app.yaml

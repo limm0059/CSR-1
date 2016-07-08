@@ -73,7 +73,8 @@ class Summary(Handler):
         for i in orders:
             ret.append(i.to_dict())
             for j in i.orders:
-                dd[j['name']] += j['qty']
+                value1 = 0 if j['qty'] is None else j['qty']
+                dd[j['name']] += value1
 
         agg = []
         for key, value in dd.items():
@@ -95,10 +96,23 @@ class Download(Handler):
             items = ""
             total = 0
             for j in i.orders:
-                total += (j['qty'] * j['price'])
-                items += "%s %s ; " % (j['name'], j['qty'])
+                value1 = 0 if j['qty'] is None else j['qty']
+                total += (value1 * j['price'])
+                items += "%s %s ; " % (j['name'], value1)
             row = i.name, i.email, i.phone, items, total
             writer.writerow(row)
+
+
+class Persist(Handler):
+    def post(self):
+        data = json.loads(self.request.body)
+        phone = data['phone']
+        try: 
+            phone = int(phone)
+        except:
+            self.response.write(json.dumps({'data': False}))
+        orders = Orders.get_order(phone).orders
+        self.response.write(json.dumps({'data': orders}))
 
 
 app = webapp2.WSGIApplication([
@@ -107,5 +121,6 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/all', handler = Summary),
     webapp2.Route('/summary', handler = Summary),
     webapp2.Route('/all/download', handler = Download, name = "Download"),
-    webapp2.Route('/summary/download', handler = Download, name = "Download")
+    webapp2.Route('/summary/download', handler = Download, name = "Download"),
+    webapp2.Route('/past', handler = Persist, name = "Persist")
 ], debug = True)
